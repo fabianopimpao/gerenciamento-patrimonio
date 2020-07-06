@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import me.pimpao.gerenciamentopatrimonio.domain.dto.UsuarioDto;
@@ -20,9 +19,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
-	@Autowired
-	private BCryptPasswordEncoder bCryptPasswordEncoder;
-		
 	@Override
 	public Usuario buscarPorId(UUID id) {
 		Optional<Usuario> usuario = usuarioRepository.findById(id);
@@ -49,7 +45,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 	
 	private Usuario fromDto(UsuarioDto usuarioDto) {
-		return new Usuario(usuarioDto.getNome(), usuarioDto.getEmail(), bCryptPasswordEncoder.encode(usuarioDto.getSenha()));
+		return new Usuario(usuarioDto.getNome(), usuarioDto.getEmail(), usuarioDto.getSenha());
 	}
 
 }
